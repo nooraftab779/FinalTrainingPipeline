@@ -1,0 +1,18 @@
+
+
+
+<form method="post">{% csrf_token %}
+  <button onclick="history.back()">Go Back</button>
+  <input type="hidden" name="{{ form.server_id.html_name }}" value="{{ request.session.server }}">
+  <div><h3>Server Name: {{ request.session.server }}</h3></div>
+  <input type="hidden" name="{{ form.user_id.html_name }}" value="{{ request.user.id }}">
+  <input type="datetime-local" id="reservation_time" name="{{ form.reservation_time.html_name }}"><br>
+  {% for err in form.reservation_time.errors %}
+  {{ err }}
+  {% endfor %}<br>
+  <input type="datetime-local" id="end_time" name="{{ form.end_time.html_name }}"><br>
+  {% for err in form.end_time.errors %}
+  {{ err }}
+  {% endfor %}<br>
+  <input type="submit" value="Submit">
+</form>

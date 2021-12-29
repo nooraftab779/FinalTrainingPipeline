@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+{% block content %}
+{% load tags %}
+
+<h1>moniter page</h1>
+{% for g in graph %}
+<h1>{{ server_name|lookup:0 }}</h1>
+<div style="width:600;height:500">
+    {{ g|safe }}
+    {% endfor %}
+</div>
+{% endblock %}

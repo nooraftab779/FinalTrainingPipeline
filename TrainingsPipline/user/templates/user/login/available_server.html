@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+body {
+        background-color: #d5e1df;
+        align-items: center;
+        margin: 10px;
+        padding: 2rem 1.5rem;
+        font: 1rem/1.5 "PT Sans", Arial, sans-serif;
+        color: #5a5a5a;
+      }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 4px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Server Availablity </title>
+</head>
+<body>
+<h2>Available Servers</h2>
+
+<button onclick="history.back()">Go Back</button>
+
+<table>
+    <tr>
+                <th>Server ID</th>
+
+        <th>Server Name</th>
+        <th>Ram</th>
+        <th>Processor</th>
+        <th>Server Status</th>
+        <th>Availablity</th>
+
+    </tr>
+    {% for data in ServerData %}
+    <tr>
+                <td> {{ data.server_id }}</td>
+
+        <td> {{ data.servername }}</td>
+        <td>{{ data.ram }}</td>
+        <td>{{ data.processor }}</td>
+        <td>{{ data.available }}</td>
+        <td>{% if data.status == 1 %}
+        {{ True }}
+            {% else %}
+            {{ False }}
+            {% endif %}
+
+        </td>
+
+        <td>
+            {% if data.status == True %}
+            <form method='post' action="{% url 'book-now' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success" name='server' value="{{ data.server_id }}"> Book Now
+                </button>
+            </form>
+            {% endif %}
+            <form method="post" action="{% url 'reservation' %}">
+                {% csrf_token %}
+                <button type="submit" name="server" value="{{ data.server_id }}" class="btn btn-warning">Reserve
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+</body>
+</html>
